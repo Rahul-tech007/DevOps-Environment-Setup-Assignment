@@ -1,0 +1,81 @@
+Task 3 – Backup Configuration for Web Servers
+
+Creating backup directory:
+
+sudo mkdir /backups
+sudo chmod 755 /backups
+Sarah Apache Backup
+
+Creating Script
+
+sudo nano apache_backup.sh
+
+Creating Frist Script
+
+#!/bin/bash
+
+DATE=$(date +%F)
+
+tar -czvf /backups/apache_backup_$DATE.tar.gz /etc/httpd /var/www/html
+
+echo "Backup created on $DATE" >> /backups/apache_backup_log.txt
+
+tar -tzf /backups/apache_backup_$DATE.tar.gz >> /backups/apache_backup_log.txt
+
+Making it executable
+
+chmod +x apache_backup.sh
+Mike Nginx Backup
+
+Creating 2 script:
+
+sudo nano nginx_backup.sh
+
+Script:
+
+#!/bin/bash
+
+DATE=$(date +%F)
+
+tar -czvf /backups/nginx_backup_$DATE.tar.gz /etc/nginx /usr/share/nginx/html
+
+echo "Backup created on $DATE" >> /backups/nginx_backup_log.txt
+
+tar -tzf /backups/nginx_backup_$DATE.tar.gz >> /backups/nginx_backup_log.txt
+
+Making it executable:
+
+chmod +x nginx_backup.sh
+Schedule Cron Jobs
+
+Open cron
+
+crontab -e
+
+Output
+
+0 0 * * 2 /home/Sarah/apache_backup.sh
+0 0 * * 2 /home/mike/nginx_backup.sh
+
+Meaning:
+
+0 0 * * 2
+│ │ │ │ │
+│ │ │ │ └ Tuesday
+│ │ │ └ every month
+│ │ └ every day
+│ └ hour
+└ minute
+
+Runs every Tuesday 12:00 AM
+
+Verification of Backup
+
+Check files:
+
+ls /backups
+
+Example output:
+
+apache_backup_2026-03-13.tar.gz
+nginx_backup_2026-03-13.tar.gz

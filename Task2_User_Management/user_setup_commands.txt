@@ -1,0 +1,37 @@
+Users Creation
+
+sudo useradd -m Sarah
+sudo passwd Sarah
+
+sudo useradd -m mike
+sudo passwd mike
+
+Workspace Directories Creation
+
+sudo mkdir -p /home/Sarah/workspace
+sudo mkdir -p /home/mike/workspace
+
+Setting Ownership
+sudo chown Sarah:Sarah /home/Sarah/workspace
+sudo chown mike:mike /home/mike/workspace
+
+Setting Permissions (Owner Access)
+
+sudo chmod 700 /home/Sarah/workspace
+sudo chmod 700 /home/mike/workspace
+
+Command to check permissions
+
+ls -ld /home/Sarah/workspace
+ls -ld /home/mike/workspace
+5. Enforce Password Expiration Policy
+
+Set password expiry to 30 days.
+
+sudo chage -M 30 Sarah
+
+sudo chage -M 30 mike
+
+Verification
+
+chage -l Sarah
